@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-
+import { MyProvider } from './components/ContextProvider.jsx';
 //pages
 import HomePage from './pages/HomePage.jsx'
 import BlogsPage from './pages/BlogsPage.jsx'

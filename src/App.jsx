@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import Headder from './components/Headder'
+import Footer from './components/Footer'
+import { MyProvider } from './components/ContextProvider'
 // import './App.css'
 
 function App() {
@@ -7,15 +10,13 @@ function App() {
 
   return (
     <>
-    <div className='h-20 bg-blue-500 text-white flex items-center justify-center'>
-      headder
-    </div>
+    <MyProvider>
+    <Headder />
     <div className=' min-h-screen bg-green-200'>
     <Outlet />
     </div>
-    <div className='h-20 bg-blue-500 text-white flex items-center justify-center'>
-      footer
-    </div>
+    <Footer />
+    </MyProvider>
     </>
   )
 }
