@@ -171,7 +171,7 @@ const SignInPage = () => {
             {/* Logo */}
             <div className="flex items-center justify-center h-full relative z-10">
               <img
-                src="../public/eplogoo.png"
+                src="../public/Logo.png"
                 alt="Logo"
                 className="w-48 h-48 md:w-64 md:h-64 object-cover"
               />
