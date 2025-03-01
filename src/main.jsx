@@ -12,6 +12,8 @@ import MissionsPage from './pages/MissionsPage.jsx';
 import QuizPage from './pages/QuizPage.jsx';
 import SignInPage from './pages/SignInPage.jsx';
 import SignUpPage from './pages/SignupPage.jsx';
+import SingleBlogPage from './blogs/SingleBlogPage.jsx';
+import AddBlogComponent from './blogs/AddBlogComponent.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,15 @@ const router = createBrowserRouter([
       },
       {
         path : "/blogs", 
-        element : <BlogsPage />
+        element : <BlogsPage />,
+      },
+      {
+        path : "/blogs/:id", 
+        element : <SingleBlogPage />
+      },
+      {
+        path : "/blogs/new", 
+        element : <AddBlogComponent />
       },
       {
         path : "/communities", 

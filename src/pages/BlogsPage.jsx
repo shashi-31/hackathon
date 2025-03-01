@@ -1,10 +1,11 @@
 import React from 'react'
+import BlogsGallery from '../blogs/BlogsGallery'
 
 function BlogsPage() {
     return (
-        <div className='text-center text-5xl'>
-            Blogs
-        </div>
+       <>
+        <BlogsGallery />
+       </>
     )
 }
 
