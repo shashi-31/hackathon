@@ -63,8 +63,7 @@ function Header() {
                 "Blogs",
                 "Missions",
                 "Communities",
-                "Quiz",
-                "Events",
+                "Weather",
                 "Profile",
               ].map((item) => (
                 <li key={item}>

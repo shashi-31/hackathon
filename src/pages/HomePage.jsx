@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useState } from 'react'
+import TemperatureCard from '../components/env components/TemperatureCard';
 
 function HomePage() {
     const [data, setData] = useState([]);
@@ -23,6 +24,7 @@ function HomePage() {
     return (
         <div className='text-center text-5xl'>
             <h1>Home Page</h1>
+            <TemperatureCard temperature={"20"} />
             <code className='text-left text-sm'>
                 {data}
             </code>
