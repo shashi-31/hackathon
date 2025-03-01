@@ -14,6 +14,7 @@ import SignInPage from './pages/SignInPage.jsx';
 import SignUpPage from './pages/SignupPage.jsx';
 import SingleBlogPage from './blogs/SingleBlogPage.jsx';
 import AddBlogComponent from './blogs/AddBlogComponent.jsx';
+import WeatherPage from './pages/WeatherPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -49,9 +50,10 @@ const router = createBrowserRouter([
         element : <QuizPage />
       },
       {
-        path : "/signin", 
-        element : <SignInPage />
+        path : "/weather",
+        element : <WeatherPage />
       },
+      
       {
         path : "/signup", 
         element : <SignUpPage />
@@ -67,8 +69,13 @@ const router = createBrowserRouter([
       {
         path : "*",
         element : <h1 className='text-center text-5xl'>404 Not Found</h1>
-      }
+      },
+      
     ]
+  },
+  {
+    path : "/signin", 
+    element : <SignInPage />
   },
 ]);
 createRoot(document.getElementById('root')).render(

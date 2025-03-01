@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and signup
@@ -6,6 +7,8 @@ const SignInPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
+
+  const navigate = useNavigate();
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -15,6 +18,7 @@ const SignInPage = () => {
     } else {
       console.log("Signing up with:", username, email, password);
     }
+    navigate("/"); // Redirect to home page after login/signup
   };
 
   // Toggle between login and signup and reset form fields
@@ -112,6 +116,7 @@ const SignInPage = () => {
               <button
                 type="submit"
                 className="w-full bg-green-500 text-white py-2 px-4 rounded-lg mb-3 hover:bg-green-600 text-sm"
+
               >
                 {isLogin ? "Log In" : "Sign Up"}
               </button>

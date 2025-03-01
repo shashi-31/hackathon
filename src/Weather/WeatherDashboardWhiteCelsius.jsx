@@ -1,6 +1,5 @@
-"use client";
+
 import React from "react";
-import Header from "./Header";
 import DateTimeCard from "./DateTimeCard";
 import WeatherDetailsCard from "./WeatherDetailsCard";
 import ForecastCard from "./ForecastCard";
@@ -9,7 +8,7 @@ import WeatherMap from "./WeatherMap";
 function WeatherDashboardWhiteCelsius() {
   return (
     <section className="overflow-hidden px-20 py-16 max-md:px-5">
-      <Header />
+      
 
       <div className="mt-12 w-full max-md:mt-10 max-md:mr-2.5 max-md:max-w-full">
         <div className="flex gap-5 max-md:flex-col">
