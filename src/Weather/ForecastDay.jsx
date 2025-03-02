@@ -2,16 +2,19 @@ import React from "react";
 
 function ForecastDay({ icon, temperature, day }) {
   return (
-    <div className="flex gap-10 items-center self-start mt-1.5 text-center">
+    <div className="flex items-center gap-6 bg-white px-4 py-3 rounded-lg shadow-md w-full max-w-xs">
       <img
         src={icon}
         alt="Weather icon"
-        className="object-contain shrink-0 self-stretch aspect-square shadow-[0px_4px_4px_rgba(0,0,0,0.25)] w-[60px]"
+        className="w-14 h-14 object-contain"
       />
-      <p className="self-stretch my-auto text-2xl">{temperature}</p>
-      <p className="self-stretch my-auto text-xl basis-auto">{day}</p>
+      <div className="flex flex-col items-center">
+        <p className="text-2xl font-semibold">{temperature}°</p>
+        <p className="text-lg text-gray-600">{day}</p>
+      </div>
     </div>
   );
 }
 
 export default ForecastDay;
+
