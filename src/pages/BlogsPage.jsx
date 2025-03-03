@@ -1,10 +1,10 @@
 import React from 'react'
-import BlogsGallery from '../blogs/BlogsGallery'
+import BlogsList from '../blogs/BlogList'
 
 function BlogsPage() {
     return (
        <>
-        <BlogsGallery />
+        <BlogsList />
        </>
     )
 }
