@@ -1,35 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const BlogCard = ({ id, title, date, image, description, author }) => {
-
-    const imageSrc = "../../public/SampleBlog.jpeg"
-   
-  return (
-    <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto rounded-lg overflow-hidden shadow-md bg-white hover:shadow-2xl transition-shadow duration-300 ease-in-out">
-      {/* Image */}
-      <img className="w-full h-48 object-cover rounded-t-lg" src={imageSrc} alt={title} />
-
-      <div className="px-6 py-4">
-        {/* Title */}
-        <div className="font-bold text-2xl mb-2 text-gray-900 line-clamp-2">{title}</div>
-
-        {/* Description */}
-        <p className="text-gray-700 text-base mb-4 line-clamp-3">{description}</p>
-
-        {/* Author and Date */}
-        <div className="flex items-center justify-between text-sm text-gray-600">
-          <span className="font-medium">By {author}</span>
-          <span className="text-gray-500">{date}</span>
-        </div>
+const BlogCard = ({ id, title, date, image, description, author, isFeatured }) => {
+  return isFeatured ? (
+    <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg">
+      <img className="w-full h-72 object-cover" src={image} alt={title} />
+      <div className="absolute bottom-6 left-6 bg-white p-4 rounded-lg shadow-md w-2/3">
+        <span className="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">Technology</span>
+        <h2 className="text-xl font-bold mt-2">{title}</h2>
+        <div className="text-gray-500 text-sm mt-1">By {author} • {date}</div>
       </div>
-
-      {/* Footer */}
-      <div className="px-6 py-4">
-        <Link
-          to={`/blogs/${id}`}
-          className="text-green-500 hover:text-green-600 text-sm font-semibold hover:underline"
-        >
+    </div>
+  ) : (
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+      <img className="w-full h-48 object-cover" src={image} alt={title} />
+      <div className="p-4">
+        <span className="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">Technology</span>
+        <h3 className="font-bold text-lg mt-2">{title}</h3>
+        <p className="text-gray-600 text-sm mt-1">By {author} • {date}</p>
+        <Link to={`/blogs/${id}`} className="text-blue-500 text-sm font-semibold hover:underline mt-2 block">
           Read more...
         </Link>
       </div>
