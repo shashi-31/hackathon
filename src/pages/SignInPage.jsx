@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useContext } from "react";
+import { Context } from "../components/ContextProvider";
 
 const SignInPage = () => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and signup
@@ -9,16 +12,48 @@ const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
 
   const navigate = useNavigate();
+  const { user, setUser } = useContext(Context);
+
+  // useEffect(() => {
+  //   axios.get(`${import.meta.env.VITE_BACKEND_URL}/${isLogin?}`).then((res) => {
+  //     console.log(res.data);
+  //   }
+  // }, []);
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isLogin) {
-      console.log("Logging in with:", email, password);
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/signin`, { email, password })
+        .then((res) => {
+          console.log(res.data);
+          setUser({ user: res.data || null , isLoggedIn: true });
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          window.alert("Something went wrong. Please try again.");
+        });
     } else {
-      console.log("Signing up with:", username, email, password);
+      // signup for user registration
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/signup`, {
+          username,
+          email,
+          password,
+        })
+        .then((res) => {
+          console.log(res.data);
+          setUser({ user : res.data || null , isLoggedIn: true });
+          // navigate("/");
+          setIsLogin(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          window.alert("Signup failed. Please try again.");
+        });
     }
-    navigate("/"); // Redirect to home page after login/signup
   };
 
   // Toggle between login and signup and reset form fields
@@ -59,7 +94,10 @@ const SignInPage = () => {
               {/* Username Field (Only for Signup) */}
               {!isLogin && (
                 <div className="input-group mb-3">
-                  <label htmlFor="username" className="block text-gray-600 mb-1 text-sm">
+                  <label
+                    htmlFor="username"
+                    className="block text-gray-600 mb-1 text-sm"
+                  >
                     Username
                   </label>
                   <input
@@ -76,7 +114,10 @@ const SignInPage = () => {
 
               {/* Email Field */}
               <div className="input-group mb-3">
-                <label htmlFor="email" className="block text-gray-600 mb-1 text-sm">
+                <label
+                  htmlFor="email"
+                  className="block text-gray-600 mb-1 text-sm"
+                >
                   Email
                 </label>
                 <input
@@ -92,7 +133,10 @@ const SignInPage = () => {
 
               {/* Password Field */}
               <div className="input-group mb-4">
-                <label htmlFor="password" className="block text-gray-600 mb-1 text-sm">
+                <label
+                  htmlFor="password"
+                  className="block text-gray-600 mb-1 text-sm"
+                >
                   Password
                 </label>
                 <div className="relative">
@@ -106,7 +150,9 @@ const SignInPage = () => {
                     required
                   />
                   <i
-                    className={`fa ${showPassword ? "fa-eye-slash" : "fa-eye"} absolute right-3 top-3 text-gray-500 cursor-pointer`}
+                    className={`fa ${
+                      showPassword ? "fa-eye-slash" : "fa-eye"
+                    } absolute right-3 top-3 text-gray-500 cursor-pointer`}
                     onClick={() => setShowPassword(!showPassword)} // Toggle visibility
                   ></i>
                 </div>
@@ -116,7 +162,6 @@ const SignInPage = () => {
               <button
                 type="submit"
                 className="w-full bg-green-500 text-white py-2 px-4 rounded-lg mb-3 hover:bg-green-600 text-sm"
-
               >
                 {isLogin ? "Log In" : "Sign Up"}
               </button>
@@ -126,7 +171,9 @@ const SignInPage = () => {
             <div className="text-center space-y-2">
               {/* Toggle Link */}
               <p className="text-gray-600 text-sm">
-                {isLogin ? "Don't have an account? " : "Already have an account? "}
+                {isLogin
+                  ? "Don't have an account? "
+                  : "Already have an account? "}
                 <a
                   href="#"
                   className="text-green-500 hover:text-green-600"
@@ -152,14 +199,10 @@ const SignInPage = () => {
 
             {/* Social Login Buttons */}
             <div className="social-btn space-y-3 mt-4">
-              <button
-                className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 flex items-center justify-center border border-gray-300 text-sm"
-              >
+              <button className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 flex items-center justify-center border border-gray-300 text-sm">
                 <i className="fab fa-google mr-2"></i> Sign in with Google
               </button>
-              <button
-                className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 flex items-center justify-center border border-gray-300 text-sm"
-              >
+              <button className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 flex items-center justify-center border border-gray-300 text-sm">
                 <i className="fab fa-facebook-f mr-2"></i> Sign in with Facebook
               </button>
             </div>

@@ -15,6 +15,7 @@ import SignUpPage from './pages/SignupPage.jsx';
 import SingleBlogPage from './blogs/SingleBlogPage.jsx';
 import AddBlogComponent from './blogs/AddBlogComponent.jsx';
 import WeatherPage from './pages/WeatherPage.jsx';
+// import { MyProvider } from './components/ContextProvider'
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,12 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <MyProvider>
+    <RouterProvider router={router}>
+      
+        <App />
+      
+    </RouterProvider>
+    </MyProvider>
   </StrictMode>,
 )

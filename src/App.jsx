@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Headder from './components/Headder'
 import Footer from './components/Footer'
-import { MyProvider } from './components/ContextProvider'
+
 // import './App.css'
 
 function App() {
@@ -10,13 +10,11 @@ function App() {
 
   return (
     <>
-    <MyProvider>
     <Headder />
     <div className='p-6 bg-gradient-to-r from-[#D8F3DC] via-[#B7E4C7] via-[#A3D9C6] via-[#BFDCE5] to-[#D6E6F2] min-h-screen'>
     <Outlet />
     </div>
     <Footer />
-    </MyProvider>
     </>
   )
 }

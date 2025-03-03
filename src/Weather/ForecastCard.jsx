@@ -10,9 +10,12 @@ function ForecastCard({ forecastDays }) {
         {forecastDays.map((day, index) => (
           <ForecastDay
             key={index}
-            icon={day.icon}
-            temperature={day.temp}
-            day={day.day}
+            day={day?.day}
+            date={day?.date}
+            condition={day?.condition}
+            temperature={day?.temperature}
+            humidity={day?.humidity}
+            windSpeed={day?.wind_speed}
           />
         ))}
       </div>

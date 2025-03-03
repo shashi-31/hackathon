@@ -8,7 +8,7 @@ function HomePage() {
 
     useEffect(() => {
         document.title = 'Home | EcoPlanet'
-        axios.get(`${import.meta.env.VITE_ML_URL}/`)
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/`)
         .then((res) => {
             console.log(typeof res.data);
             setData(res.data)
