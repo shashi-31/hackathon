@@ -31,13 +31,13 @@ const router = createBrowserRouter([
         element : <BlogsPage />,
       },
       {
-        path : "/blogs/:id", 
+        path : "/blogs/:blogId", 
         element : <SingleBlogPage />
       },
       {
         path : "/blogs/new", 
         element : <AddBlogComponent />
-      },
+      },      
       {
         path : "/communities", 
         element : <CommunitiesPage />

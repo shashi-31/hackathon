@@ -10,37 +10,39 @@ function WeatherDashboardWhiteCelsius() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+   if(!weatherData){
     fetch("http://127.0.0.1:5000")
-      .then((response) => response.json())
-      .then((data) => {
-        setWeatherData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching weather data:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    .then((response) => response.json())
+    .then((data) => {
+      setWeatherData(data);
+    })
+    .catch((error) => {
+      console.error("Error fetching weather data:", error);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+   }
   }, []);
 
   console.log(weatherData);
 
-  if (loading) {
-    return (
-      <p className="text-center text-xl font-bold">Loading weather data...</p>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <p className="text-center text-xl font-bold">Loading weather data...</p>
+  //   );
+  // }
 
-  if (!weatherData) {
-    return (
-      <p className="text-center text-xl font-bold">
-        Failed to load weather data.
-      </p>
-    );
-  }
+  // if (!weatherData) {
+  //   return (
+  //     <p className="text-center text-xl font-bold">
+  //       Failed to load weather data.
+  //     </p>
+  //   );
+  // }
 
-  const { location, timestamp, weather, forecast, graphs } = weatherData;
-  const currentWeather = forecast[0];
+  // const { location, timestamp, weather, forecast, graphs } = weatherData;
+  // const currentWeather = forecast[0];
 
   return (
     <section className="overflow-hidden px-20 py-16 max-md:px-5">
@@ -48,7 +50,7 @@ function WeatherDashboardWhiteCelsius() {
         <div className="flex gap-5 max-md:flex-col">
           <div className="w-2/5 max-md:ml-0 max-md:w-full">
             <DateTimeCard
-              city={location}
+              city={weatherData?.location}
               time={new Date().toLocaleTimeString()}
               date={new Date().toDateString()}
             />
@@ -73,26 +75,28 @@ function WeatherDashboardWhiteCelsius() {
         <div className="flex gap-5 max-md:flex-col">
           <div className="w-1/2 max-md:ml-0 max-md:w-full">
             
-            <ForecastCard forecastDays={forecast} />
+            { weatherData && <ForecastCard forecastDays={weatherData.forecast} />}
           </div>
-          <div className="flex flex-col gap-5 w-1/2 max-md:ml-0 max-md:w-full items-center">
+          { weatherData && (
+            <div className="flex flex-col gap-5 w-1/2 max-md:ml-0 max-md:w-full items-center">
             <div className="ml-5 w-full max-md:ml-0 max-md:w-full">
               <h1>Temperature </h1>
-              <WeatherMap mapUrl={graphs.temperature} />
+              <WeatherMap mapUrl={weatherData.graphs.temperature} />
             </div>
             <div className="ml-5 w-full max-md:ml-0 max-md:w-full">
               <h1>Humidity </h1>
-              <WeatherMap mapUrl={graphs.humidity} />
+              <WeatherMap mapUrl={weatherData.graphs.humidity} />
             </div>
             <div className="ml-5 w-full max-md:ml-0 max-md:w-full">
               <h1>air_pollution_pie </h1>
-              <WeatherMap mapUrl={graphs.air_pollution_pie} />
+              <WeatherMap mapUrl={weatherData.graphs.air_pollution_pie} />
             </div>
             <div className="ml-5 w-full max-md:ml-0 max-md:w-full">
               <h1>AQI</h1>
-              <WeatherMap mapUrl={graphs.aqi} />
+              <WeatherMap mapUrl={weatherData.graphs.aqi} />
             </div>
           </div>
+          )}
         </div>
       </div>
     </section>
