@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 
 const AddBlogComponent = () => {
   const [images, setImages] = useState([]);
@@ -16,6 +16,10 @@ const AddBlogComponent = () => {
     const blogData = { images, title, description, content };
     console.log('Blog Data:', blogData);
   };
+
+  useEffect(() => {
+    console.log('Images:');
+  }, []);
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
