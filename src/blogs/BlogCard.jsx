@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const BlogCard = ({ id, title, date, image, description, author, isFeatured }) => {
   return isFeatured ? (
-    <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg">
+    <div className="relative w-full  rounded-lg overflow-hidden shadow-lg">
       <img className="w-full h-72 object-cover" src={image} alt={title} />
       <div className="absolute bottom-6 left-6 bg-white p-4 rounded-lg shadow-md w-2/3">
         <span className="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">Technology</span>
@@ -25,5 +25,4 @@ const BlogCard = ({ id, title, date, image, description, author, isFeatured }) =
     </div>
   );
 };
-
 export default BlogCard;

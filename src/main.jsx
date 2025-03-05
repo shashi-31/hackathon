@@ -15,6 +15,7 @@ import SignUpPage from './pages/SignupPage.jsx';
 import SingleBlogPage from './blogs/SingleBlogPage.jsx';
 import AddBlogComponent from './blogs/AddBlogComponent.jsx';
 import WeatherPage from './pages/WeatherPage.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
 // import { MyProvider } from './components/ContextProvider'
 
 const router = createBrowserRouter([
@@ -60,8 +61,8 @@ const router = createBrowserRouter([
         element : <SignUpPage />
       },
       {
-        path: "/about",
-        element: <h1 className='text-center text-5xl'>About</h1>,
+        path: "/Profile",
+        element: <ProfilePage />,
       },
       {
         path: "/contact",
