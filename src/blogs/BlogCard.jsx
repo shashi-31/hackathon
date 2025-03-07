@@ -17,7 +17,7 @@ const BlogCard = ({ _id, title, createdAt, image, owner }) => {
   ) : (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <img className="w-full h-48 object-cover" src={image} alt={title} />
-      <div className="p-4">
+      <div className="p-4 md-5">
       <div className='flex justify-between'>
         <span className="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded ">Technology</span>
         <div className='flex items-center justify-center '> 20K Views  .  100  <FcLike /> </div>

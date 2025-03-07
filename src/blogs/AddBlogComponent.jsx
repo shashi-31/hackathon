@@ -1,77 +1,52 @@
-import React, { use, useState } from 'react';
+import { useState } from "react";
+import { FiImage, FiSend } from "react-icons/fi";
 
-const AddBlogComponent = () => {
-  const [images, setImages] = useState([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [content, setContent] = useState('');
-
-  const handleImageUpload = (event) => {
-    const files = event.target.files;
-    setImages([...images, ...Array.from(files)]);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const blogData = { images, title, description, content };
-    console.log('Blog Data:', blogData);
-  };
-
-  useEffect(() => {
-    console.log('Images:');
-  }, []);
+export default function BlogForm() {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <h1 className="text-2xl font-semibold text-center mb-6">Add a New Blog</h1>
-      <form onSubmit={handleSubmit}>
-        {/* Image Upload */}
-        <div className="mb-4">
-          <label htmlFor="images" className="block text-sm font-medium text-gray-700">Upload Images</label>
-          <input 
-            type="file" 
-            id="images" 
-            multiple 
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
-
-        {/* Title */}
-        <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
-          <input 
-            type="text" 
-            id="title" 
-            value={title} 
+    <div className="flex justify-center gap-6 p-6 w-full h-screen bg-gray-100">
+      <div className="w-1/6 bg-gray-500 p-4 rounded-lg shadow-xl flex flex-col justify-center items-center text-white">
+        <h3 className="text-lg font-bold">Advertisement</h3>
+        <p className="mt-2 text-center text-sm">Your ad content here.</p>
+      </div>
+      <div className="p-6 w-3/5 bg-white shadow-2xl rounded-xl border border-gray-300 flex flex-col h-full relative">
+        <h2 className="text-4xl font-extrabold mb-4 text-gray-900 text-center">Create a Blog</h2>
+        <div className="mb-3">
+          <label className="block text-lg font-semibold text-gray-700 mb-2">Blog Title</label>
+          <input
+            type="text"
+            placeholder="Enter Blog Title"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
-            required
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+            className="w-full p-3 border border-gray-400 rounded-lg text-lg focus:ring-4 focus:ring-indigo-400 focus:outline-none shadow-md bg-gray-50"
           />
         </div>
-
-        {/* Description */}
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
-          <textarea 
-            id="description" 
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-          />
+        <div className="mb-3 flex-grow h-full">
+          <label className="block text-lg font-semibold text-gray-700 mb-2">Blog Content</label>
+          <textarea
+            placeholder="Write your blog content here..."
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="w-full p-3 border border-gray-400 rounded-lg h-[350px] text-lg focus:ring-4 focus:ring-indigo-400 focus:outline-none shadow-md bg-gray-50"
+          ></textarea>
         </div>
-
-        {/* Submit Button */}
-        <div className="flex justify-center">
-          <button type="submit" className="bg-indigo-600 text-white px-6 py-2 rounded-md shadow-md hover:bg-indigo-700">
-            Submit Blog
+        <div className="flex items-center justify-between p-3 bg-indigo-200 rounded-lg w-full shadow-lg mt-3 border border-indigo-400">
+          <label className="flex items-center cursor-pointer text-indigo-700 text-md hover:text-indigo-900">
+            <FiImage className="text-2xl mr-2" />
+            <span>Add Image</span>
+            <input type="file" accept="image/*" className="hidden" />
+          </label>
+          <button className="flex items-center bg-indigo-700 text-white px-5 py-2 rounded-lg text-md hover:bg-indigo-800 shadow-lg">
+            <FiSend className="text-2xl mr-2" /> Post
           </button>
         </div>
-      </form>
+      </div>
+      <div className="w-1/6 bg-gray-500 p-4 rounded-lg shadow-xl flex flex-col justify-center items-center text-white">
+        <h3 className="text-lg font-bold">Advertisement</h3>
+        <p className="mt-2 text-center text-sm">Your ad content here.</p>
+      </div>
     </div>
   );
-};
-
-export default AddBlogComponent;
+}

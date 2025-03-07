@@ -4,6 +4,7 @@ import BlogCard from './BlogCard';
 import AddBlogComponent from './AddBlogComponent';
 import SingleBlogPage from './SingleBlogPage';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 const BlogList = () => {
@@ -38,6 +39,11 @@ const BlogList = () => {
           <BlogCard key={blog._id} {...blog} />
         ))}
       </div>
+      <Link to="/blogs/new" className=''>
+        <div className='fixed bottom-4 right-4  bg-gray-800 text-white text-lg font-semibold p-2 rounded-lg text-center mt-4'>
+          Add Blog
+        </div>
+      </Link>
       {/* <Routes>
         <Route path="/add-blog" element={<AddBlogComponent />} />
         <Route path="/blogs/:id" element={<SingleBlogPage />} />
