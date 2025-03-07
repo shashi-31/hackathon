@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 //import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const CommDetailsPage = () => {
+  const {communityId} = useParams();
+  const [community, setCommunity] = useState(null);
+  useEffect(() => {
+    if(communityId){
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/getCommunity/${communityId}`)
+      .then((res) => {
+        setCommunity(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert("Something went wrong. Please try again.");
+      });
+    }
+  },[communityId]);
   // const { id } = useParams(); // Get the community ID from the URL
   // const navigate = useNavigate(); // For navigation
-  const id = 1;
-
+  
+  const navigate = useNavigate(); // For navigation
   const isAdmin = true; // Set this based on the user's role (e.g., from authentication context)
 
   // Sample data for posts in the community
@@ -50,8 +66,20 @@ const CommDetailsPage = () => {
 
   // Function to handle leaving the community
   const handleLeaveCommunity = () => {
-    alert(`You have left the community with ID: ${id}`);
-    // navigate("/"); // Navigate back to the home page or communities list
+    
+    axios
+    .post(`${import.meta.env.VITE_BACKEND_URL}/exitCommunity/${communityId}`,
+       {},{ withCredentials: true })
+    .then((res) => {
+      console.log(res.data);
+      navigate("/communities");
+      alert("User left community @ "+ community.name +" successfully");
+    })
+    .catch((err) => {
+      console.log(err);
+      window.alert("Something went wrong. Please try again.");
+    });
+
   };
 
   // Function to add an emoji to the message
@@ -61,7 +89,7 @@ const CommDetailsPage = () => {
   };
 
   return (
-    <div className="p-6 bg-gradient-to-r from-[#D8F3DC] via-[#B7E4C7] via-[#A3D9C6] via-[#BFDCE5] to-[#D6E6F2] min-h-screen overflow-hidden relative">
+    community && (<div className="p-6 bg-gradient-to-r from-[#D8F3DC] via-[#B7E4C7] via-[#A3D9C6] via-[#BFDCE5] to-[#D6E6F2] min-h-screen overflow-hidden relative">
       {/* Doodle Patterns */}
       <div className="absolute inset-0 bg-doodle-pattern opacity-10 z-0"></div>
 
@@ -87,7 +115,7 @@ const CommDetailsPage = () => {
       <div className="fixed top-0 left-0 right-0 bg-[#4A6B5F] p-4 flex justify-between items-center shadow-md z-10">
         {/* Back Button */}
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/communities")} // Navigate back to the communities list
           className="text-white hover:text-gray-300"
         >
           <svg
@@ -106,7 +134,7 @@ const CommDetailsPage = () => {
           </svg>
         </button>
         {/* Community Name */}
-        <h1 className="text-xl font-bold text-white">Community Name</h1>
+        <h1 className="text-xl font-bold text-white">{community.name}</h1>
         {/* Leave Button */}
         <button
           onClick={handleLeaveCommunity}
@@ -237,6 +265,7 @@ const CommDetailsPage = () => {
         </div>
       )}
     </div>
+    )
   );
 };
 
