@@ -2,105 +2,86 @@ import React, { useEffect, useState } from "react";
 import DateTimeCard from "./DateTimeCard";
 import WeatherDetailsCard from "./WeatherDetailsCard";
 import ForecastCard from "./ForecastCard";
-import WeatherMap from "./WeatherMap";
-import axios from "axios";
+import AirQualityCard from "./AirQualityCard";
+import PollutantHealthCard from "./PollutantHealthCard";
 
 function WeatherDashboardWhiteCelsius() {
   const [weatherData, setWeatherData] = useState(null);
+  const [currentWeather, setCurrentWeather] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-   if(!weatherData){
-    fetch("http://127.0.0.1:5000")
-    .then((response) => response.json())
-    .then((data) => {
-      setWeatherData(data);
-    })
-    .catch((error) => {
-      console.error("Error fetching weather data:", error);
-    })
-    .finally(() => {
+    try {
+      // forecast data
+      fetch("http://127.0.0.1:5000")
+        .then((response) => response.json())
+        .then(async(data) => {
+          if (!data.error) {
+            setWeatherData(data);
+            // current weather data
+            await fetch("http://127.0.0.1:5000/current-weather")
+              .then((response) => response.json())
+              .then((data) => {
+                if (!data.error) {
+                  setCurrentWeather(data);
+                } else {
+                  console.error("API Error {Current Weather}:", data.error);
+                }
+              })
+              .catch((error) => console.error("Error fetching current weather data:", error))
+          } else {
+            console.error("API Error:", data.error);
+          }
+        })
+        .catch((error) => console.error("Error fetching weather data:", error))
+    } catch (error) {
+      console.error("Error fetching weather data:", error)
+    }
+    finally {
       setLoading(false);
-    });
-   }
+    }
   }, []);
 
-  console.log(weatherData);
+  if (loading || !weatherData || !currentWeather) {
+    return <p className="text-center text-xl font-bold">Loading weather data...</p>;
+  }
 
-  // if (loading) {
-  //   return (
-  //     <p className="text-center text-xl font-bold">Loading weather data...</p>
-  //   );
-  // }
+  const { location, timestamp, forecast } = weatherData;
 
-  // if (!weatherData) {
-  //   return (
-  //     <p className="text-center text-xl font-bold">
-  //       Failed to load weather data.
-  //     </p>
-  //   );
-  // }
-
-  // const { location, timestamp, weather, forecast, graphs } = weatherData;
-  // const currentWeather = forecast[0];
-
-  return (
+  return (!loading && weatherData && currentWeather) ? (
     <section className="overflow-hidden px-20 py-16 max-md:px-5">
-      <div className="mt-12 w-full max-md:mt-10 max-md:mr-2.5 max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col">
-          <div className="w-2/5 max-md:ml-0 max-md:w-full">
-            <DateTimeCard
-              city={weatherData?.location}
-              time={new Date().toLocaleTimeString()}
-              date={new Date().toDateString()}
-            />
-          </div>
-          <div className="ml-5 w-3/5 max-md:ml-0 max-md:w-full">
-            {/* <WeatherDetailsCard
-              temperature={`${weather.temperature}°C`}
-              feelsLike={`${weather.temperature}°C`}
-              weatherType={weather.condition}
-              sunriseTime="06:37 AM" // Replace with API data if available
-              sunsetTime="20:37 PM"  // Replace with API data if available
-              humidity={`${weather.humidity}%`}
-              pressure={`${weather.pressure} hPa`}
-              windSpeed={`${weather.wind_speed} km/h`}
-              uvIndex="8" // Placeholder (Replace if API provides UV Index)
-            /> */}
-          </div>
+      {/* Grid Layout with 2 Columns & 3 Rows */}
+      <div className="grid grid-cols-2 gap-5 max-md:grid-cols-1">
+        {/* Column 1 (Left Side) */}
+        <div className="flex flex-col gap-5 items-center h-full">
+          {/* Row 1: Date & Time */}
+          <DateTimeCard city={location} className="h-auto" />
+          {/* Row 2: Forecast (Starts After Date & Time) */}
+          <ForecastCard className="h-auto" forecastDays={forecast} />
         </div>
-      </div>
 
-      <div className="mt-12 max-md:mt-10 max-md:mr-2.5 max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col">
-          <div className="w-1/2 max-md:ml-0 max-md:w-full">
-            
-            { weatherData && <ForecastCard forecastDays={weatherData.forecast} />}
-          </div>
-          { weatherData && (
-            <div className="flex flex-col gap-5 w-1/2 max-md:ml-0 max-md:w-full items-center">
-            <div className="ml-5 w-full max-md:ml-0 max-md:w-full">
-              <h1>Temperature </h1>
-              <WeatherMap mapUrl={weatherData.graphs.temperature} />
-            </div>
-            <div className="ml-5 w-full max-md:ml-0 max-md:w-full">
-              <h1>Humidity </h1>
-              <WeatherMap mapUrl={weatherData.graphs.humidity} />
-            </div>
-            <div className="ml-5 w-full max-md:ml-0 max-md:w-full">
-              <h1>air_pollution_pie </h1>
-              <WeatherMap mapUrl={weatherData.graphs.air_pollution_pie} />
-            </div>
-            <div className="ml-5 w-full max-md:ml-0 max-md:w-full">
-              <h1>AQI</h1>
-              <WeatherMap mapUrl={weatherData.graphs.aqi} />
-            </div>
-          </div>
-          )}
+        {/* Column 2 (Right Side) */}
+        <div className="h-full flex flex-col gap-5">
+          {/* Row 1: Weather Details */}
+          <WeatherDetailsCard
+            temperature={currentWeather?.current_weather.temperature ?? 0}
+            feelsLike={currentWeather?.current_weather.temperature ?? 0}
+            weatherType={weatherData.forecast[0].condition ?? "Unknown"}
+            sunriseTime={currentWeather?.current_weather.sunrise ?? "06:00 AM"}
+            sunsetTime={currentWeather?.current_weather.sunset ?? "07:00 PM"}
+            humidity={currentWeather?.current_weather.humidity?.toFixed(1) ?? "N/A"}
+            pressure={currentWeather?.current_weather.pressure ?? "N/A"}
+            windSpeed={currentWeather?.current_weather.wind_speed?.toFixed(1) ?? "N/A"}
+            uvIndex="N/A"
+          />
+          {/* Row 2: Air Quality Card */}
+          <AirQualityCard />
+          {/* Row 3: Pollution Health Effects Card */}
+          <PollutantHealthCard />
         </div>
       </div>
     </section>
-  );
+  ) : <h1>Loading weather data ....</h1>
 }
 
 export default WeatherDashboardWhiteCelsius;

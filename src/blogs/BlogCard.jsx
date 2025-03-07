@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FcLike } from "react-icons/fc";
-const BlogCard = ({ _id, title, createdAt, image, owner }) => {
-  return false ? (
-    <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg">
+
+const BlogCard = ({ id, title, date, image, description, author, isFeatured }) => {
+  return isFeatured ? (
+    <div className="relative w-full  rounded-lg overflow-hidden shadow-lg">
       <img className="w-full h-72 object-cover" src={image} alt={title} />
       <div className="absolute bottom-6 left-6 bg-white p-4 rounded-lg shadow-md w-2/3">
         <div className='flex items-stretch'>
@@ -31,5 +31,4 @@ const BlogCard = ({ _id, title, createdAt, image, owner }) => {
     </div>
   );
 };
-
 export default BlogCard;
