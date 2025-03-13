@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import dayjs from "dayjs";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -17,6 +17,17 @@ const Dashboard = () => {
   const daysInMonth = currentDate.daysInMonth();
   const today = dayjs().date();
   const scrollRef = useRef(null);
+  const [missionDate, setMissionDate] = useState(dayjs().date(1));
+  console.log(missionDate);
+  
+  useEffect(() => {
+    
+    console.log(missionDate);
+    console.log(dayjs().toString());
+    
+    
+  }, [missionDate]);
+  
 
   const daysArray = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
@@ -101,6 +112,7 @@ const Dashboard = () => {
           {daysArray.map((day) => (
             <div
               key={day}
+              onClick={() => setMissionDate({date : day , day : currentDate.date(day).format("ddd")})}
               className={`flex flex-col items-center w-12 h-16 p-3 rounded-lg shadow-md text-center cursor-pointer bg-white transition-all duration-300 hover:bg-green-100 ${
                 day === today ? "border-2 border-green-500 text-green-500" : "border border-gray-300"
               }`}
@@ -115,6 +127,10 @@ const Dashboard = () => {
         <button className="absolute right-0 z-10 p-2 bg-gray-200 shadow rounded-full">
           <ChevronRight className="w-5 h-5" />
         </button>
+      </div>
+
+      <div className="p-4 bg-white shadow-lg rounded-xl mt-6 mi">
+
       </div>
     </div>
   );

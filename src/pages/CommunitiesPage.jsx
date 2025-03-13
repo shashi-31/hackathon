@@ -1,11 +1,10 @@
 import React from 'react'
+import CommunityPage from '../communityfold/CommunityPage'
 
 function CommunitiesPage() {
-    return (
-        <div className='text-center text-5xl'>
-            Communities
-        </div>
-    )
+  return (
+    <CommunityPage />
+  )
 }
 
 export default CommunitiesPage

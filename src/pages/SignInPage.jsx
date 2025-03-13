@@ -14,20 +14,18 @@ const SignInPage = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(Context);
 
-  // useEffect(() => {
-  //   axios.get(`${import.meta.env.VITE_BACKEND_URL}/${isLogin?}`).then((res) => {
-  //     console.log(res.data);
-  //   }
-  // }, []);
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (isLogin) {
       axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/signin`, { email, password })
+        .post(`${import.meta.env.VITE_BACKEND_URL}/signin`, { email, password },{ withCredentials: true })
         .then((res) => {
           console.log(res.data);
+          console.log("User logged in successfully");
+          
           setUser({ user: res.data || null , isLoggedIn: true });
           navigate("/");
         })
@@ -42,7 +40,7 @@ const SignInPage = () => {
           username,
           email,
           password,
-        })
+        },{ withCredentials: true })
         .then((res) => {
           console.log(res.data);
           setUser({ user : res.data || null , isLoggedIn: true });

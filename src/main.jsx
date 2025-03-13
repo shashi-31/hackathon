@@ -17,7 +17,7 @@ import AddBlogComponent from './blogs/AddBlogComponent.jsx';
 import WeatherPage from './pages/WeatherPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 // import { MyProvider } from './components/ContextProvider'
-
+import CommDetailsPage from './communityfold/CommDetailsPage.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,6 +43,7 @@ const router = createBrowserRouter([
         path : "/communities", 
         element : <CommunitiesPage />
       },
+      
       {
         path : "/missions", 
         element : <MissionsPage />
@@ -78,6 +79,11 @@ const router = createBrowserRouter([
   {
     path : "/signin", 
     element : <SignInPage />
+  },
+  {
+    path : "/community/:communityId", 
+    element : <CommDetailsPage />
+
   },
 ]);
 createRoot(document.getElementById('root')).render(
