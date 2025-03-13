@@ -76,7 +76,7 @@ function WeatherDashboardWhiteCelsius() {
             humidity={currentWeather?.current_weather.humidity?.toFixed(1) ?? "N/A"}
             pressure={currentWeather?.current_weather.pressure ?? "N/A"}
             windSpeed={currentWeather?.current_weather.wind_speed?.toFixed(1) ?? "N/A"}
-            uvIndex="N/A"
+            uvIndex="11"
           />
           {/* Row 2: Air Quality Card */}
           <AirQualityCard setAirPollutants={setAirPollutants}/>
